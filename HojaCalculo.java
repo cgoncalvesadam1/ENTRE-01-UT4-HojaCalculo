@@ -5,7 +5,7 @@
  *  En cada fila la empresa "apunta" los ingresos y gastos en 
  *  una determinada fecha
  * 
- * @author -   
+ * @author -   Catarina Gonçalves Almeida
  *  
  */
 public class HojaCalculo
@@ -66,9 +66,23 @@ public class HojaCalculo
      * (dependerá de cuántas filas estén a null)
      */
     public int getNumeroFilas() {
-        
-        return 0;
-
+        int contador = 1;
+        if(fila1 == null){
+            System.out.println("NO EXISTE CONTADOR");
+        } else
+        {
+            contador++;
+        }   if (fila2 == null){
+            System.out.println("NO EXISTE CONTADOR");
+        } else 
+        {
+            contador++;
+        } if (fila3 == null){
+            System.out.println("NO EXISTE CONTADOR");
+        } else 
+        { contador++;
+        }
+        return contador++;
     }
 
     /**
@@ -76,8 +90,11 @@ public class HojaCalculo
      * (tiene exactamente 3 filas)
      */
     public boolean hojaCompleta() {
-        return true;
-
+        if (getNumeroFilas() == 3){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -87,7 +104,17 @@ public class HojaCalculo
      * si se añade como primera, segunda o tercera fila (no han de quedar huecos)
      */
     public void addFila(Fila fila) {
-         
+        if(getNumeroFilas() == 3){
+            System.out.println("FilaX no se puede añadir en HOJAX");
+        }else {
+            if(getNumeroFilas() == 2){
+                fila3 = fila;
+            } else if (getNumeroFilas() == 1){
+                fila2 = fila;
+            }if (getNumeroFilas() == 0){
+                fila1 = fila;
+            }
+        }
 
     }
 
@@ -97,8 +124,7 @@ public class HojaCalculo
      * (evita repetir código)
      */
     public void addFila(String id, Fecha fecha, double ingresos, double gastos) {
-         
-
+        Fila OtraFila = new Fila (id, fecha, ingresos, gastos);
     }
 
     /**
@@ -106,10 +132,12 @@ public class HojaCalculo
      * todas las filas que incluye la hoja
      */
     public double getTotalIngresos() {
-         
-
-        return 0;
-
+        double ingresosAbsolutos = 0;
+        
+        ingresosAbsolutos += fila1.getIngresos();
+        ingresosAbsolutos += fila2.getIngresos();
+        ingresosAbsolutos += fila3.getIngresos();
+        return ingresosAbsolutos;
     }
 
     /**
@@ -117,8 +145,12 @@ public class HojaCalculo
      * entre todas las filas que incluye la hoja
      */
     public double getTotalGastos() {
-        return 0;
-
+        double gastosAbsolutos = 0;
+        
+        gastosAbsolutos  += fila1.getGastos();
+        gastosAbsolutos  += fila2.getGastos();
+        gastosAbsolutos  += fila3.getGastos();
+        return gastosAbsolutos;
     }
 
     /**
@@ -126,8 +158,12 @@ public class HojaCalculo
      * entre todas las filas que incluye la hoja
      */
     public double getBeneficio() {
-        return 0;
-
+        double beneficiosAbsolutos = 0;
+        
+        beneficiosAbsolutos += fila1.getBeneficio();
+        beneficiosAbsolutos += fila2.getBeneficio();
+        beneficiosAbsolutos += fila3.getBeneficio();
+        return beneficiosAbsolutos;
     }
 
     /**
@@ -135,8 +171,13 @@ public class HojaCalculo
      * con el formato exacto que indica el enunciado
      */
     public String toString() {
-         
-        return null;
+        return String.format("%-8s\n %23s %16s %16s\n" +
+            fila1.toString() + "\n" +
+            fila2.toString() + "\n" +
+            fila3.toString() + "\n-------------------\n" +
+            "%40.2f€ %15.2f€ %15.2f€",
+            getNombre(), "FECHA",getTotalIngresos() + "INGRESOS", getTotalGastos() + "GASTOS",
+            "BENEFICIOS" + getBeneficio());
 
     }
 
@@ -146,11 +187,11 @@ public class HojaCalculo
      * Al duplicar la hoja se duplicarán también las filas que contenga
      */
     public HojaCalculo duplicarHoja() {
-        
-        
-        
-       return null;
+        HojaCalculo Calculo = new HojaCalculo("DUPLICADA" + this.getNombre());
+        Calculo.addFila(this.fila1);
+        Calculo.addFila(this.fila3);
+        Calculo.addFila(this.fila3);
+        return Calculo;
     }
 
-   
 }
